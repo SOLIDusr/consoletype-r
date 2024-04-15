@@ -16,43 +16,52 @@ class App:
         self.Player: App.Player = self.Gui.startPage()
         self.O0: App.O0 = App.O0()
 
-    def gettype():
-            valid_chars: list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?', ' ']
-            cmd_keys: list = [b'\x14', b'\x70', b'\x71', b'\x72', b'\x73', b'\x74', b'\x75', b'\x76', b'\x77', b'\x78', b'\x79', b'\x7a']  # TAB, CAPS LOCK, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12
 
-            if sys.platform.startswith('win'):
-                import msvcrt
-                char = msvcrt.getch()
-                if char.decode() in valid_chars:
-                    return char.decode()
-                elif char == b'\x08':  # Check for backspace character (ASCII code 8)
+    def clear():
+        
+        if sys.platform.startswith('win'):
+            system("cls")
+        else:
+            system("clear")
+
+
+    def gettype():
+        valid_chars: list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?', ' ']
+        cmd_keys: list = [b'\x14', b'\x70', b'\x71', b'\x72', b'\x73', b'\x74', b'\x75', b'\x76', b'\x77', b'\x78', b'\x79', b'\x7a']  # TAB, CAPS LOCK, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12
+
+        if sys.platform.startswith('win'):
+            import msvcrt
+            char = msvcrt.getch()
+            if char.decode() in valid_chars:
+                return char.decode()
+            elif char == b'\x08':  # Check for backspace character (ASCII code 8)
+                return "BACKSPACE"
+            elif char == b'\x1b':  # Check for ESC character (ASCII code 27)
+                return "ESC"
+            elif char == b'\x09':   # Check for TAB character (ASCII code 9)
+                return "TAB"
+            elif char in cmd_keys:
+                return "CMD"
+            else:
+                return "ERROR"
+        else:
+            import tty, termios
+            fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(fd)
+            try:
+                tty.setraw(sys.stdin.fileno())
+                ch = sys.stdin.read(1)
+                if ch in valid_chars:
+                    return ch
+                elif ch == '\x7f':  # Check for backspace character (ASCII code 127)
                     return "BACKSPACE"
-                elif char == b'\x1b':  # Check for ESC character (ASCII code 27)
+                elif ch == '\x1b':  # Check for ESC character (ASCII code 27)
                     return "ESC"
-                elif char == b'\x09':   # Check for TAB character (ASCII code 9)
-                    return "TAB"
-                elif char in cmd_keys:
-                    return "CMD"
                 else:
                     return "ERROR"
-            else:
-                import tty, termios
-                fd = sys.stdin.fileno()
-                old_settings = termios.tcgetattr(fd)
-                try:
-                    tty.setraw(sys.stdin.fileno())
-                    ch = sys.stdin.read(1)
-                    if ch in valid_chars:
-                        return ch
-                    elif ch == '\x7f':  # Check for backspace character (ASCII code 127)
-                        return "BACKSPACE"
-                    elif ch == '\x1b':  # Check for ESC character (ASCII code 27)
-                        return "ESC"
-                    else:
-                        return "ERROR"
-                finally:
-                    termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
     # Player object
 
     class O0:
@@ -249,13 +258,13 @@ class App:
                     print("\n")
 
             def load(self):
-                system("cls")
+                self.app.clear()
                 print(self.title)
                 for item in self.content:
                     item.load()
                 print("Press Enter To Continue...")
                 input()
-                system("cls")
+                self.app.clear()
                 self.goto()
 
             def goto(self):
@@ -283,7 +292,7 @@ class App:
                 self._items = args
             
             def load(self):
-                system("cls")
+                self.app.clear()
                 print(self._title)
                 count = 0
                 for item in self._items:
@@ -328,7 +337,7 @@ class App:
 
         def startPage(self):
             for i in range(5):
-                system("cls")
+                self.app.clear()
                 # if i % 4 
                 hands = "|/-\\"
                 print("Removing System32" + " " + f"[{hands[i % 4]}]")
@@ -370,7 +379,7 @@ class App:
             startedTime = time.time()
             timings = [startedTime]
             while (text != inputText):
-                system("cls")
+                self.app.clear()
                 print(text)
                 if totalTyped != 0:
                     print("press ESC to exit | WPM: " + str(round((len(inputText.split(" ")) / (time.time() - startedTime)) * 100, 2)) + " | Accuracy: " + str(round((totalTyped - mistakes) / totalTyped, 2) * 100) + "%")
