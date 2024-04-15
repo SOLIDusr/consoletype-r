@@ -377,7 +377,7 @@ class App:
             startedTime = time.time()
             timings = [startedTime]
             while (text != inputText):
-                clear()
+                clear() 
                 print(text)
                 if totalTyped != 0:
                     print("press ESC to exit | WPM: " + str(round((len(inputText.split(" ")) / (time.time() - startedTime)) * 100, 2)) + " | Accuracy: " + str(round((totalTyped - mistakes) / totalTyped, 2) * 100) + "%")
@@ -421,6 +421,7 @@ class App:
                         inputChar = ""
                     else:
                         inputText = inputText[:-1]
+                        mistakes += 1
                 else:
                     inputText += inputChar
             # checking AC
