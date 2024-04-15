@@ -132,9 +132,9 @@ class App:
                 _equal_chunks = _check_chunks(_oOo)
                 for _chunk in _equal_chunks:
                     self._oOO += f"\n{len(_chunk)} chunck\n"
-                    if len(_chunk) > 5 and self._o0O > 80:
+                    if len(_chunk) > 6 and self._o0O > 80:
                         _Oo0 -= 4*len(_chunk)
-                    elif len(_chunk) > 3 and self._o0O > 80:
+                    elif len(_chunk) > 4 and self._o0O > 80:
                         _Oo0 -= 2*len(_chunk)
 
 
@@ -376,10 +376,8 @@ class App:
             totalTyped = 0
             startedTime = time.time()
             timings = [startedTime]
-            typechar = ""
             while (text != inputText):
                 clear()
-                print(typechar)
                 print(text)
                 if totalTyped != 0:
                     print("press ESC to exit | WPM: " + str(round((len(inputText.split(" ")) / (time.time() - startedTime)) * 100, 2)) + " | Accuracy: " + str(round((totalTyped - mistakes) / totalTyped, 2) * 100) + "%")
@@ -406,7 +404,6 @@ class App:
                         pass
                 print(displayText + col.Style.RESET_ALL)
                 inputChar = App.gettype()
-                typechar = inputChar
                 timings.append(time.time())
                 totalTyped += 1
 
