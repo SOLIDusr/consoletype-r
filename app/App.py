@@ -420,7 +420,10 @@ class App:
                 elif inputChar == "CMD":
                     pass
                 elif inputChar == "ERROR":
-                    inputChar = ""
+                    if sys.platform.startswith('win'):
+                        inputChar = ""
+                    else:
+                        inputText = inputText[:-1]
                 else:
                     inputText += inputChar
             # checking AC
