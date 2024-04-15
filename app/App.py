@@ -376,8 +376,10 @@ class App:
             totalTyped = 0
             startedTime = time.time()
             timings = [startedTime]
+            typechar = ""
             while (text != inputText):
                 clear()
+                print(typechar)
                 print(text)
                 if totalTyped != 0:
                     print("press ESC to exit | WPM: " + str(round((len(inputText.split(" ")) / (time.time() - startedTime)) * 100, 2)) + " | Accuracy: " + str(round((totalTyped - mistakes) / totalTyped, 2) * 100) + "%")
@@ -404,6 +406,7 @@ class App:
                         pass
                 print(displayText + col.Style.RESET_ALL)
                 inputChar = App.gettype()
+                typechar = inputChar
                 timings.append(time.time())
                 totalTyped += 1
 

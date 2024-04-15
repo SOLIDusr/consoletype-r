@@ -1,0 +1,26 @@
+{
+    "profile": {
+        "Name": "kate",
+        "BestWPM": {
+            "Easy": 0,
+            "Medium": 0,
+            "Hard": 0
+        },
+        "BestAccuracy": {
+            "Easy": 0,
+            "Medium": 0,
+            "Hard": 0
+        },
+        "AverageWPM": {
+            "Easy": 0,
+            "Medium": 0,
+            "Hard": 0
+        },
+        "AverageAccuracy": {
+            "Easy": 0,
+            "Medium": 0,
+            "Hard": 0
+        }
+    },
+    "runs": {}
+}
