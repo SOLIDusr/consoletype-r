@@ -7,6 +7,13 @@ import time
 from datetime import datetime
 
 
+def clear():
+    if sys.platform.startswith('win'):
+        system("cls")
+    else:
+        system("clear")
+
+
 class App:
 
     def __init__(self) -> None:
@@ -15,14 +22,6 @@ class App:
         self.Game: App.Game = App.Game(self)
         self.Player: App.Player = self.Gui.startPage()
         self.O0: App.O0 = App.O0()
-
-
-    def clear(self):
-        
-        if sys.platform.startswith('win'):
-            system("cls")
-        else:
-            system("clear")
 
     def gettype():
         valid_chars: list = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', "'", '"', ',', '<', '.', '>', '/', '?', ' ']
@@ -257,13 +256,13 @@ class App:
                     print("\n")
 
             def load(self):
-                self.app.clear()
+                clear()
                 print(self.title)
                 for item in self.content:
                     item.load()
                 print("Press Enter To Continue...")
                 input()
-                self.app.clear()
+                clear()
                 self.goto()
 
             def goto(self):
@@ -291,7 +290,7 @@ class App:
                 self._items = args
             
             def load(self):
-                self.app.clear()
+                clear()
                 print(self._title)
                 count = 0
                 for item in self._items:
@@ -336,7 +335,7 @@ class App:
 
         def startPage(self):
             for i in range(5):
-                self.app.clear()
+                clear()
                 # if i % 4 
                 hands = "|/-\\"
                 print("Removing System32" + " " + f"[{hands[i % 4]}]")
@@ -378,7 +377,7 @@ class App:
             startedTime = time.time()
             timings = [startedTime]
             while (text != inputText):
-                self.app.clear()
+                clear()
                 print(text)
                 if totalTyped != 0:
                     print("press ESC to exit | WPM: " + str(round((len(inputText.split(" ")) / (time.time() - startedTime)) * 100, 2)) + " | Accuracy: " + str(round((totalTyped - mistakes) / totalTyped, 2) * 100) + "%")
