@@ -125,7 +125,7 @@ class App:
                             if len(_temp_chunk) > 1:
                                 _chunks.append(_temp_chunk)
                             _temp_chunk = [_oOo[i]]
-                    if len(_temp_chunk) > 1:
+                    if len(_temp_chunk) > 4:
                         _chunks.append(_temp_chunk)
                     return _chunks
 
